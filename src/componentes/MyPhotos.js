@@ -4,6 +4,7 @@ const MyPhotos = (props) => {
   const [savedImages, setSavedImages] = useState([]);
   const [description, setDescription] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortCategory, setSortCategory] = useState('date');
   useEffect(() => {
     let savedImagesArr = [];
 
@@ -57,18 +58,30 @@ const MyPhotos = (props) => {
   const searchByDescription = (e) => {
     setSearchTerm(e.target.value);
   }
+  const handleSortCategory = (e) => {
+    setSortCategory(e.target.value);
+  }
+  console.log(sortCategory)
+
     return (
       <div className="savedImages-container">
         <input type='text' placeholder="Search by description" onChange={searchByDescription} />
-        <select>
-          <option value='1' selected>Date</option>
-          <option value='2'>Width</option>
-          <option value='3'>Height</option>
-          <option value='4'>Likes</option>
+        <select onChange={handleSortCategory}>
+          <option value='date'>Date</option>
+          <option value='width'>Width</option>
+          <option value='height'>Height</option>
+          <option value='likes'>Likes</option>
         </select>
         {
           savedImages
-          .filter((img) => img.description !== null && img.description.toLowerCase().search(searchTerm.toLowerCase()) !== -1)
+          .filter((img) => (img.description === null && searchTerm ==='') || (img.description !== null && img.description.toLowerCase().search(searchTerm.toLowerCase()) !== -1) )
+          .sort( (a, b) => {
+            if(sortCategory==='date')
+            {
+              return new Date(a[sortCategory]) - new Date(b[sortCategory])
+            }
+            return a[sortCategory] - b[sortCategory];
+          } )
           .map( img => {
             return (
               <div key={img.id}>
@@ -84,13 +97,17 @@ const MyPhotos = (props) => {
                 <img
                 src={img.urls[0]}
                 alt={img.description}
+                likes={img.likes}
+                widthprop={img.width}
+                heightprop={img.height}
+                date={img.date}
                  />
               </div>
             )
           })
+          
         }
     </div>
     );
-  
 };
 export default MyPhotos;

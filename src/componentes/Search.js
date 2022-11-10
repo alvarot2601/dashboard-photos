@@ -12,17 +12,7 @@ const Search = (props) => {
   };
 
   const saveImage = (e) => {
-    const actualDate = new Date();
-    const actualDateTime =
-      actualDate.getDay() +
-      "/" +
-      actualDate.getMonth() +
-      "/" +
-      actualDate.getFullYear() +
-      " " +
-      actualDate.getHours() +
-      ":" +
-      actualDate.getMinutes();
+    const actualDateTime =  new Date();
     const [img] = props.images.filter((img) => img.id === e.target.name);
     const properties = {
       id: img.id,
@@ -31,7 +21,7 @@ const Search = (props) => {
       height: img.height,
       likes: img.likes,
       urls: [img.urls.full, img.urls.thumb],
-      actualDateTime: actualDateTime,
+      date: actualDateTime,
     };
     localStorage.setItem('saved_images_' + properties.id, JSON.stringify(properties));
     console.log(properties);
