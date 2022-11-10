@@ -16,15 +16,10 @@ const Nav = () => {
 			<li>
 				<Link to="/myphotos">My Photos</Link>
 			</li>
-			<li>
-				<img src={logo} />
-			</li>
 		</ul>
 		</nav>
 		<Outlet/>
 	</>
-
-
   );
 };
 export default Nav;
