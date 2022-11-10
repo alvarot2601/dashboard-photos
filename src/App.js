@@ -18,7 +18,7 @@ const App = () => {
           <Route path="/" element={<Root />}>
             <Route index element={<Home />} />
             <Route path="search" element={<Search imagesContext={imagesContext} images = {images} setImages={setImages} />} />
-            <Route path="myphotos" element={<MyPhotos images={images} />} />
+            <Route path="myphotos" element={<MyPhotos />} />
           </Route>
         </Routes>
       </BrowserRouter>
