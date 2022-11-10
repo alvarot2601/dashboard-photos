@@ -2,8 +2,7 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 
-const Home = (props) => {
-    console.log(props.a)
+const Home = () => {
     return (
         <>
             <h1>Choose and download any photo you like from Unsplash</h1>
