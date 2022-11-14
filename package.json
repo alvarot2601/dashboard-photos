@@ -1,5 +1,5 @@
 {
-  "homepage": "https://{username}.github.io/",
+  "homepage": "https://{username}.github.io/{repo-name}",
   "name": "dashboard-photos",
   "version": "0.1.0",
   "private": true,
