@@ -9,16 +9,12 @@ nav ul {
   height: 100%;
   list-style-type: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 nav ul li {
   margin: 0px 20px;
   font-weight: bold;
-}
-nav ul img {
-  width: 30px;
-  height: 30px;
 }
 
 main.main__search {
