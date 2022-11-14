@@ -24,6 +24,7 @@ const Search = (props) => {
   const searchTerm = useSelector(selectSearchTerm);
   const favoritePhotos = useSelector(selectFavoritePhotos);
   const photos = useSelector(selectPhotos);
+  console.log("photos: " + photos[0])
   const dispatch = useDispatch();
 
   //const searchTerm = useSelector(selectSearchTerm);
@@ -42,9 +43,9 @@ const Search = (props) => {
     //props.setImages(data.results);
     dispatch(addPhotos(data.results));
     dispatch(clearSearchTerm());
-    console.log("data.results" + data.results);
+    console.log("data.results" + data.results[0].urls.regular);
   };
-
+  console.log(photos)
   const saveImage = (e, id) => {
     const actualDateTime = new Date();
     const [img] = photos.filter((img) => img.id === id);
@@ -56,6 +57,7 @@ const Search = (props) => {
       height: img.height,
       likes: img.likes,
       urls: [img.urls.full, img.urls.thumb],
+      src: img.urls.regular,
       date: actualDateTime.toString(),
     };
     localStorage.setItem(
@@ -68,12 +70,8 @@ const Search = (props) => {
     }
     if(sw===false){
       dispatch(addFavoritePhoto(properties));
-      console.log(false)
     }
-    else{
-      console.log(true)
-    }
-     
+    console.log("src: " + properties.src)
   };
 
   return (
@@ -109,7 +107,7 @@ const Search = (props) => {
                 <Card sx={{ maxWidth: 345, margin: "auto" }}>
                   <CardMedia
                     component="img"
-                    src={img.urls.full}
+                    src={img.urls.regular}
                   />
                   <CardActions>
                   <Button variant="contained" onClick={(e) => saveImage(e, img.id)} fullWidth>
