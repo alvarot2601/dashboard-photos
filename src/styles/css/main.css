@@ -22,33 +22,17 @@ nav ul img {
 }
 
 main.main__search {
-  width: 80%;
+  width: 90%;
   margin: auto;
-}
-main.main__search input {
-  padding: 10px;
-  background: black;
-  color: white;
-  width: 60%;
-}
-main.main__search input[type=submit] {
-  background-color: green;
-  width: 30%;
-  margin-left: 10px;
-}
-main.main__search ::placeholder {
-  color: white;
 }
 
 div.images-container {
   margin-top: 50px;
 }
-div.images-container img {
-  max-width: 300px;
-  height: auto;
-}
 
 footer {
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 70px;
   background: black;
@@ -58,14 +42,26 @@ footer {
   justify-content: center;
   margin-top: 50px;
 }
+footer span {
+  margin-left: 6px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
 
 main.main__home {
-  height: 300px;
-  background-image: url("../../assets/dog.png");
+  height: 400px;
+  background-image: url("../../assets/plant.jpg");
   background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+main.main__home img {
+  margin: auto;
 }
 main.main__home button {
   font-weight: bold;
@@ -89,9 +85,23 @@ div.savedImages-container {
   width: 90%;
   margin: auto;
   text-align: center;
+  padding-bottom: 100px;
 }
-div.savedImages-container img {
-  max-width: 300px;
+body {
+  min-height: 100vh;
+  position: relative;
+}
+
+main {
+  padding-bottom: 100px;
+}
+
+a {
+  color: white;
+}
+
+a:hover {
+  color: green;
 }
 
 /*# sourceMappingURL=main.css.map */

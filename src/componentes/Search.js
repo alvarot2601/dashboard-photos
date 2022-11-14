@@ -1,22 +1,50 @@
 import React, { useState, useContext, createContext } from "react";
+import Button from "@mui/material/Button";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addSearchTerm,
+  selectSearchTerm,
+  clearSearchTerm
+} from "../features/searchTerm/searchTermSlice";
+import { addPhotos, selectPhotos } from "../features/allPhotos/allPhotosSlice";
 
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Unstable_Grid2";
+import SearchIcon from '@mui/icons-material/Search';
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 const Search = (props) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  //const [searchTerm, setSearchTerm] = useState('');--
+  //const selectSearchTerm = useSelector(state => state.searchTerm);
+  const searchTerm = useSelector(selectSearchTerm);
+  const photos = useSelector(selectPhotos);
+  const dispatch = useDispatch();
+
+  //const searchTerm = useSelector(selectSearchTerm);
 
   const handleChange = (e) => {
-    setSearchTerm(e.target.value);
-  }
-  const handleClick = async () => { 
+    dispatch(addSearchTerm(e.target.value));
+    //setSearchTerm(e.target.value);--
+  };
+  const handleClick = async () => {
     const response = await fetch(
-      "https://api.unsplash.com/search/photos/?query="+ searchTerm + "&client_id=68CyGDmE1a7FiglE6ufSenlEKv-mqBbqy5lvRv4owGU"
+      "https://api.unsplash.com/search/photos/?query=" +
+        searchTerm +
+        "&client_id=68CyGDmE1a7FiglE6ufSenlEKv-mqBbqy5lvRv4owGU"
     );
     const data = await response.json();
-    props.setImages(data.results);
-  }
+    //props.setImages(data.results);
+    dispatch(addPhotos(data.results));
+    dispatch(clearSearchTerm());
+    console.log("data.results" + data.results);
+  };
 
-  const saveImage = (e) => {
-    const actualDateTime =  new Date();
-    const [img] = props.images.filter((img) => img.id === e.target.name);
+  const saveImage = (e, id) => {
+    const actualDateTime = new Date();
+    const [img] = photos.filter((img) => img.id === id);
     const properties = {
       id: img.id,
       description: img.description,
@@ -26,29 +54,67 @@ const Search = (props) => {
       urls: [img.urls.full, img.urls.thumb],
       date: actualDateTime,
     };
-    localStorage.setItem('saved_images_' + properties.id, JSON.stringify(properties));
-    console.log(properties);
-  }
+    localStorage.setItem(
+      "saved_images_" + properties.id,
+      JSON.stringify(properties)
+    );
+    console.log("propiedades" + properties);
+  };
 
   return (
     <>
       <main className="main__search">
-        <input type="text" onChange = {handleChange} placeholder="Search any photo" />
-        <input type="submit" value="Search" onClick={handleClick} />
+        <Grid container spacing={1} style={{textAlign:'center'}}>
+          <Grid xs={10}>
+            <TextField
+              label="Search Photos"
+              size="small"
+              fullWidth
+              onChange={handleChange}
+              value={searchTerm}
+            />
+          </Grid>
+          <Grid xs={2}>
+            <Button
+              variant="outlined"
+              size="medium"
+              color="success"
+              onClick={handleClick}
+            >
+              <SearchIcon ></SearchIcon>
+            </Button>
+          </Grid>
+        </Grid>
+
         <div className="images-container">
-          {props.images.map((img, index) => {
+          <Grid container spacing={2} columns={{ xs: 1, sm: 1, md: 8, lg: 12 }}>
+          {photos.map((img, index) => {
             return (
-              <div key={img.id}>
-                <button onClick={saveImage} name={img.id}>
+              <Grid xs={4} key={img.id}>
+                <Card sx={{ maxWidth: 345, margin: "auto" }}>
+                  <CardMedia
+                    component="img"
+                    src={img.urls.full}
+                  />
+                  <CardActions>
+                  <Button variant="contained" onClick={(e) => saveImage(e, img.id)} fullWidth>
                   Add to my photos
-                </button>
-                <img src={img.urls.full} />
-              </div>
+                </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
             );
           })}
+          </Grid>
         </div>
       </main>
     </>
   );
 };
 export default Search;
+/*<div key={img.id}>
+                <Button variant="contained" onClick={saveImage} name={img.id}>
+                  Add to my photos
+                </Button>
+                <img src={img.urls.full} />
+              </div> */
