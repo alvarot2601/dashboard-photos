@@ -13,7 +13,7 @@ const App = () => {
   const [images, setImages] = useState([]);
   return (
     <imagesContext.Provider value={images} >
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<Root />}>
             <Route index element={<Home />} />
