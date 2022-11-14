@@ -45,7 +45,7 @@ const MyPhotos = (props) => {
 
   const dispatch = useDispatch();
   const favoritePhotos = useSelector(selectFilteredPhotos);
-  
+  console.log('favo photos: ' + favoritePhotos)
   const searchTerm = useSelector(selectSearchTerm); 
   const sortCategory = useSelector(selectCategory);
 

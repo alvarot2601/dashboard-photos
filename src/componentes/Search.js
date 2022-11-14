@@ -7,6 +7,7 @@ import {
   clearSearchTerm
 } from "../features/searchTerm/searchTermSlice";
 import { addPhotos, selectPhotos } from "../features/allPhotos/allPhotosSlice";
+import {addFavoritePhoto, selectFavoritePhotos} from '../features/favoritePhotos/favoritePhotosSlice';
 
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -16,10 +17,12 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+
 const Search = (props) => {
   //const [searchTerm, setSearchTerm] = useState('');--
   //const selectSearchTerm = useSelector(state => state.searchTerm);
   const searchTerm = useSelector(selectSearchTerm);
+  const favoritePhotos = useSelector(selectFavoritePhotos);
   const photos = useSelector(selectPhotos);
   const dispatch = useDispatch();
 
@@ -45,6 +48,7 @@ const Search = (props) => {
   const saveImage = (e, id) => {
     const actualDateTime = new Date();
     const [img] = photos.filter((img) => img.id === id);
+    let sw=false;
     const properties = {
       id: img.id,
       description: img.description,
@@ -52,13 +56,24 @@ const Search = (props) => {
       height: img.height,
       likes: img.likes,
       urls: [img.urls.full, img.urls.thumb],
-      date: actualDateTime,
+      date: actualDateTime.toString(),
     };
     localStorage.setItem(
       "saved_images_" + properties.id,
       JSON.stringify(properties)
     );
-    console.log("propiedades" + properties);
+    for(let i=0;i<favoritePhotos.length;i++){
+      if(favoritePhotos[i].id === img.id)
+        sw=true;
+    }
+    if(sw===false){
+      dispatch(addFavoritePhoto(properties));
+      console.log(false)
+    }
+    else{
+      console.log(true)
+    }
+     
   };
 
   return (
