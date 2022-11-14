@@ -154,7 +154,7 @@ const MyPhotos = (props) => {
                 <Card sx={{ maxWidth: 345, margin: "auto" }}>
                   <CardMedia
                     component="img"
-                    src={img.urls[0]}
+                    src={img.src}
                     alt={img.description}
                     likes={img.likes}
                     widthprop={img.width}

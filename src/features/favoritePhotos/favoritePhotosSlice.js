@@ -16,7 +16,6 @@ export const favoritePhotosSlice = createSlice({
   reducers: {
     addFavoritePhoto: (state, action) => {
       return [...state, action.payload];
-      //return action.payload;
     },
     removeFavoritePhoto: (state, action) => {
       return state.filter((img) => img.id !== action.payload);
