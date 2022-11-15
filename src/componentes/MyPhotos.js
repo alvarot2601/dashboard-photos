@@ -6,7 +6,8 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-
+import { saveAs } from 'file-saver';
+import DownloadIcon from '@mui/icons-material/Download';
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2"; // Grid version 2
 import Box from "@mui/material/Box";
@@ -71,7 +72,6 @@ const MyPhotos = (props) => {
 
   const onEditDescriptionHandler = (id) => {
     const key = "saved_images_" + id;
-    console.log("descr:" + description);
     for (let i = 0; i < localStorage.length; i++) {
       if (localStorage.key("saved_images_" + id)) {
         const image = JSON.parse(localStorage.getItem("saved_images_" + id));
@@ -82,20 +82,16 @@ const MyPhotos = (props) => {
         );
       }
     }
-    //setSavedImages(newArr);
   };
+  const downloadImage = (link, id) => {
+    saveAs(link, `${id}.png`);
+  }
   const onChangeHandler = (e) => {
     description = e.target.value;
-    //setDescription(e.target.value);
   };
   const onSearchByDescription = (e) => {
     dispatch(addSearchTerm(e.target.value));
-    /*const searchTerm = e.target.value;
-    const matchImages = favoritePhotos
-    .filter( img => img.description.search(searchTerm) !== -1)
-    .map(img => img);
-    dispatch(addFavoritePhoto(matchImages));
-    //setSearchTerm(e.target.value);*/
+    
   };
 
   const onSortByCategory = (event: SelectChangeEvent) => {
@@ -160,6 +156,7 @@ const MyPhotos = (props) => {
                     widthprop={img.width}
                     heightprop={img.height}
                     date={img.date}
+                    id={img.id}
                   />
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
@@ -179,6 +176,14 @@ const MyPhotos = (props) => {
                       aria-label="vertical contained button group"
                       variant="contained"
                     >
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="success"
+                        onClick={() => downloadImage(img.src, img.id)}
+                      >
+                        <DownloadIcon></DownloadIcon>
+                      </Button>
                       <Button
                         variant="outlined"
                         size="small"

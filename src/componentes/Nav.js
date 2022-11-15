@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MonochromePhotosSharpIcon from "@mui/icons-material/MonochromePhotosSharp";
 import HomeIcon from "@mui/icons-material/Home";
 import ImageSearchSharpIcon from "@mui/icons-material/ImageSearchSharp";
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -23,23 +23,38 @@ const Nav = () => {
         <ul>
           <li>
             <Link to="/">
-              <HomeIcon sx={{[theme.breakpoints.up('laptop')]: {
-      fontSize: 50
-    }, fontSize:36}}></HomeIcon>
+              <HomeIcon
+                sx={{
+                  [theme.breakpoints.up("laptop")]: {
+                    fontSize: 50,
+                  },
+                  fontSize: 36,
+                }}
+              ></HomeIcon>
             </Link>
           </li>
           <li>
             <Link to="/search">
-              <ImageSearchSharpIcon sx={{[theme.breakpoints.up('laptop')]: {
-      fontSize: 50
-    }, fontSize:36}}></ImageSearchSharpIcon>
+              <ImageSearchSharpIcon
+                sx={{
+                  [theme.breakpoints.up("laptop")]: {
+                    fontSize: 50,
+                  },
+                  fontSize: 36,
+                }}
+              ></ImageSearchSharpIcon>
             </Link>
           </li>
           <li>
             <Link to="/myphotos">
-              <MonochromePhotosSharpIcon sx={{[theme.breakpoints.up('laptop')]: {
-      fontSize: 50
-    }, fontSize:36}}></MonochromePhotosSharpIcon>
+              <MonochromePhotosSharpIcon
+                sx={{
+                  [theme.breakpoints.up("laptop")]: {
+                    fontSize: 50,
+                  },
+                  fontSize: 36,
+                }}
+              ></MonochromePhotosSharpIcon>
             </Link>
           </li>
         </ul>
