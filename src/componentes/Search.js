@@ -4,14 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   addSearchTerm,
   selectSearchTerm,
-  clearSearchTerm
+  clearSearchTerm,
 } from "../features/searchTerm/searchTermSlice";
 import { addPhotos, selectPhotos } from "../features/allPhotos/allPhotosSlice";
-import {addFavoritePhoto, selectFavoritePhotos} from '../features/favoritePhotos/favoritePhotosSlice';
+import {
+  addFavoritePhoto,
+  selectFavoritePhotos,
+} from "../features/favoritePhotos/favoritePhotosSlice";
 
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Unstable_Grid2";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -24,7 +27,7 @@ const Search = (props) => {
   const searchTerm = useSelector(selectSearchTerm);
   const favoritePhotos = useSelector(selectFavoritePhotos);
   const photos = useSelector(selectPhotos);
-  console.log("photos: " + photos[0])
+  console.log("photos: " + photos[0]);
   const dispatch = useDispatch();
 
   //const searchTerm = useSelector(selectSearchTerm);
@@ -45,11 +48,11 @@ const Search = (props) => {
     dispatch(clearSearchTerm());
     console.log("data.results" + data.results[0].urls.regular);
   };
-  console.log(photos)
+  console.log(photos);
   const saveImage = (e, id) => {
     const actualDateTime = new Date();
     const [img] = photos.filter((img) => img.id === id);
-    let sw=false;
+    let sw = false;
     const properties = {
       id: img.id,
       description: img.description,
@@ -64,60 +67,56 @@ const Search = (props) => {
       "saved_images_" + properties.id,
       JSON.stringify(properties)
     );
-    for(let i=0;i<favoritePhotos.length;i++){
-      if(favoritePhotos[i].id === img.id)
-        sw=true;
+    for (let i = 0; i < favoritePhotos.length; i++) {
+      if (favoritePhotos[i].id === img.id) sw = true;
     }
-    if(sw===false){
+    if (sw === false) {
       dispatch(addFavoritePhoto(properties));
     }
-    console.log("src: " + properties.src)
+    console.log("src: " + properties.src);
   };
 
   return (
     <>
       <main className="main__search">
-        <Grid container spacing={1} style={{textAlign:'center'}}>
-          <Grid xs={10}>
-            <TextField
-              label="Search Photos"
-              size="small"
-              fullWidth
-              onChange={handleChange}
-              value={searchTerm}
-            />
-          </Grid>
-          <Grid xs={2}>
-            <Button
-              variant="outlined"
-              size="medium"
-              color="success"
-              onClick={handleClick}
-            >
-              <SearchIcon ></SearchIcon>
-            </Button>
-          </Grid>
-        </Grid>
-
-        <div className="images-container">
+        <TextField
+          id="filled-basic"
+          label="Filled"
+          variant="filled"
+          size="small"
+          label="Search photos from Unsplash"
+          onChange={handleChange}
+          value={searchTerm}
+          sx={{ width: "75%", marginRight:'2%'}}
+        />
+        <Button
+          variant="outlined"
+          size="large"
+          onClick={handleClick}
+          sx={{ color: "#1976d2"}}
+        >
+          <SearchIcon></SearchIcon>
+        </Button>
+        <div className="images-container" >
           <Grid container spacing={2} columns={{ xs: 1, sm: 1, md: 8, lg: 12 }}>
-          {photos.map((img, index) => {
-            return (
-              <Grid xs={4} key={img.id}>
-                <Card sx={{ maxWidth: 345, margin: "auto" }}>
-                  <CardMedia
-                    component="img"
-                    src={img.urls.regular}
-                  />
-                  <CardActions>
-                  <Button variant="contained" onClick={(e) => saveImage(e, img.id)} fullWidth>
-                  Add to my photos
-                </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
+            {photos.map((img, index) => {
+              return (
+                <Grid xs={4} key={img.id}>
+                  <Card sx={{ maxWidth: 345, margin: "auto" }}>
+                    <CardMedia component="img" src={img.urls.regular} />
+                    <CardActions>
+                      <Button
+                        variant="contained"
+                        onClick={(e) => saveImage(e, img.id)}
+                        fullWidth
+                      >
+                        Add to my photos
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              );
+            })}
           </Grid>
         </div>
       </main>

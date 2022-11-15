@@ -6,12 +6,10 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { saveAs } from 'file-saver';
-import DownloadIcon from '@mui/icons-material/Download';
+import { saveAs } from "file-saver";
+import DownloadIcon from "@mui/icons-material/Download";
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2"; // Grid version 2
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -46,14 +44,10 @@ const MyPhotos = (props) => {
 
   const dispatch = useDispatch();
   const favoritePhotos = useSelector(selectFilteredPhotos);
-  console.log('favo photos: ' + favoritePhotos)
-  const searchTerm = useSelector(selectSearchTerm); 
+  const searchTerm = useSelector(selectSearchTerm);
   const sortCategory = useSelector(selectCategory);
 
-  //const [savedImages, setSavedImages] = useState([]);
-  //const [sortCategory, setSortCategory] = useState("date");
-
-  let description = "";
+  const [description, setDescription] = useState("");
 
   //event Handler
   const onDeletePhotoHandler = (e) => {
@@ -66,8 +60,6 @@ const MyPhotos = (props) => {
       }
     }
     dispatch(removeFavoritePhoto(photoId));
-
-    //setSavedImages(savedImages.filter((img) => img.id !== photoId));
   };
 
   const onEditDescriptionHandler = (id) => {
@@ -85,48 +77,49 @@ const MyPhotos = (props) => {
   };
   const downloadImage = (link, id) => {
     saveAs(link, `${id}.png`);
-  }
+  };
   const onChangeHandler = (e) => {
-    description = e.target.value;
+    setDescription(e.target.value);
   };
   const onSearchByDescription = (e) => {
     dispatch(addSearchTerm(e.target.value));
-    
   };
 
   const onSortByCategory = (event: SelectChangeEvent) => {
     dispatch(changeCategory(event.target.value));
   };
-  console.log(sortCategory);
+
   return (
     <div className="savedImages-container">
-      <Grid container spacing={1} style={{ marginBottom: 50 }}>
-        <Grid xs={10}>
-          <TextField
-            label="Search by Description"
-            size="normal"
-            fullWidth
-            onChange={onSearchByDescription}
-          />
-        </Grid>
-        <Grid xs={2}>
-          <FormControl>
-            <InputLabel id="order-by-label">Order By</InputLabel>
-            <Select
-              labelId="order-by-label"
-              id="order-by"
-              value={sortCategory === undefined ? "date" : sortCategory}
-              label="order By"
-              onChange={onSortByCategory}
-            >
-              <MenuItem value="date">Date</MenuItem>
-              <MenuItem value="width">Width</MenuItem>
-              <MenuItem value="height">Height</MenuItem>
-              <MenuItem value="likes">Likes</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
+      <TextField
+        label="Search by Description"
+        
+        onChange={onSearchByDescription}
+        sx={{ width: "78%", marginRight: "2%" }}
+      />
+      <FormControl sx={{ width: "20%", marginBottom: 7 }}>
+        <InputLabel id="order-by-label">Order By</InputLabel>
+        <Select
+          labelId="order-by-label"
+          id="order-by"
+          value={sortCategory === undefined ? "date" : sortCategory}
+          label="order By"
+          onChange={onSortByCategory}
+          sx={{
+            ".MuiOutlinedInput-notchedOutline": {
+              borderColor: "#1976d2",
+            },
+            ".MuiSvgIcon-root ": {
+              fill: "#1976d2 !important",
+            },
+          }}
+        >
+          <MenuItem value="date">Date</MenuItem>
+          <MenuItem value="width">Width</MenuItem>
+          <MenuItem value="height">Height</MenuItem>
+          <MenuItem value="likes">Likes</MenuItem>
+        </Select>
+      </FormControl>
 
       <Grid container spacing={2} columns={{ xs: 1, sm: 1, md: 8, lg: 12 }}>
         {favoritePhotos
@@ -180,7 +173,7 @@ const MyPhotos = (props) => {
                         variant="outlined"
                         size="small"
                         color="success"
-                        onClick={() => downloadImage(img.src, img.id)}
+                        onClick={() => downloadImage(img.urls[0], img.id)}
                       >
                         <DownloadIcon></DownloadIcon>
                       </Button>
@@ -214,49 +207,3 @@ const MyPhotos = (props) => {
   );
 };
 export default MyPhotos;
-
-/*
-              <Box key={img.id} sx={{ flexGrow: 1}}>
-              <Grid xs={12}>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  color="error"
-                  name={img.id}
-                  onClick={onDeletePhotoHandler}
-                >
-                  Delete
-                </Button>
-              </Grid>
-
-              <Grid xs={12}>
-                <img
-                  src={img.urls[0]}
-                  alt={img.description}
-                  likes={img.likes}
-                  widthprop={img.width}
-                  heightprop={img.height}
-                  date={img.date}
-                />
-              </Grid>
-              <Grid xs={12}>
-                <TextField
-                  id="standard-basic"
-                  label="Change Description"
-                  size="small"
-                  onChange={onChangeHandler}
-                />
-              </Grid>
-              <Grid xs={12}>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  color="success"
-                  name={img.id}
-                  value={description}
-                  onClick={() => onEditDescriptionHandler(img.id)}
-                >
-                  Edit
-                </Button>
-              </Grid>
-            </Box>*/
