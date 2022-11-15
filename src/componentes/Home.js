@@ -7,17 +7,19 @@ import NavigationIcon from '@mui/icons-material/Navigation';
 const Home = () => {
   return (
     <>
-      <h1>Choose and download any photo you like from Unsplash</h1>
+      
       <main className="main__home">
+        <div>
+          <h1>Choose and download any photo you like from Unsplash</h1>
           <Link to="/search">
             <Fab variant="extended" color="primary" aria-label="add">
                 <ImageSearchSharpIcon sx={{ mr: 1 }}></ImageSearchSharpIcon>
                 Search Photos
             </Fab>
           </Link>
+        </div>
       </main>
     </>
   );
 };
-
 export default Home;
