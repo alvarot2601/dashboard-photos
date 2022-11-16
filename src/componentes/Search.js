@@ -79,25 +79,31 @@ const Search = (props) => {
   return (
     <>
       <main className="main__search">
-        <TextField
-          id="filled-basic"
-          label="Filled"
-          variant="filled"
-          size="small"
-          label="Search photos from Unsplash"
-          onChange={handleChange}
-          value={searchTerm}
-          sx={{ width: "75%", marginRight:'2%'}}
-        />
-        <Button
-          variant="outlined"
-          size="large"
-          onClick={handleClick}
-          sx={{ color: "#1976d2"}}
-        >
-          <SearchIcon></SearchIcon>
-        </Button>
-        <div className="images-container" >
+        <Grid container spacing={1}>
+          <Grid xs={9} sm={11}>
+            <TextField
+              id="filled-basic"
+              variant="filled"
+              size="small"
+              fullWidth
+              label="Search photos from Unsplash"
+              onChange={handleChange}
+              value={searchTerm}
+            />
+          </Grid>
+          <Grid xs={3} sm={1}>
+            <Button
+              variant="outlined"
+              size="large"
+              onClick={handleClick}
+              sx={{ color: "white", outline:'1px solid white' }}
+            >
+              <SearchIcon onClick={handleClick}></SearchIcon>
+            </Button>
+          </Grid>
+        </Grid>
+
+        <div className="images-container">
           <Grid container spacing={2} columns={{ xs: 1, sm: 1, md: 8, lg: 12 }}>
             {photos.map((img, index) => {
               return (

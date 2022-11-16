@@ -6,8 +6,6 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { saveAs } from "file-saver";
-import DownloadIcon from "@mui/icons-material/Download";
 import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2"; // Grid version 2
 import Card from "@mui/material/Card";
@@ -16,7 +14,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
+import Stack from "@mui/material/Stack";
 
+import SimpleDialogDemo from "./SimpleDialog";
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import {
   selectFavoritePhotos,
   addFavoritePhoto,
@@ -50,16 +51,15 @@ const MyPhotos = (props) => {
   const [description, setDescription] = useState("");
 
   //event Handler
-  const onDeletePhotoHandler = (e) => {
-    const photoId = e.target.name;
+  const onDeletePhotoHandler = (id) => {
     for (let i = 0; i < localStorage.length; i++) {
       //si la key de los elementos de localstorage contiene 'saved_images_' entonces pushea la imagen al array
-      if (localStorage.key(i).search(photoId) !== -1) {
+      if (localStorage.key(i).search(id) !== -1) {
         localStorage.removeItem(localStorage.key(i));
         break;
       }
     }
-    dispatch(removeFavoritePhoto(photoId));
+    dispatch(removeFavoritePhoto(id));
   };
 
   const onEditDescriptionHandler = (id) => {
@@ -74,9 +74,6 @@ const MyPhotos = (props) => {
         );
       }
     }
-  };
-  const downloadImage = (link, id) => {
-    saveAs(link, `${id}.png`);
   };
   const onChangeHandler = (e) => {
     setDescription(e.target.value);
@@ -93,7 +90,6 @@ const MyPhotos = (props) => {
     <div className="savedImages-container">
       <TextField
         label="Search by Description"
-        
         onChange={onSearchByDescription}
         sx={{ width: "78%", marginRight: "2%" }}
       />
@@ -107,11 +103,14 @@ const MyPhotos = (props) => {
           onChange={onSortByCategory}
           sx={{
             ".MuiOutlinedInput-notchedOutline": {
-              borderColor: "#1976d2",
+              borderColor: "white"
             },
             ".MuiSvgIcon-root ": {
-              fill: "#1976d2 !important",
+              fill: "white !important"
             },
+            ".MuiSelect-select": {
+              color: 'white'
+            }
           }}
         >
           <MenuItem value="date">Date</MenuItem>
@@ -157,46 +156,50 @@ const MyPhotos = (props) => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <TextField
-                      fullWidth
-                      label="Change Description"
-                      size="small"
-                      variant="standard"
-                      onChange={onChangeHandler}
-                    />
-                    <ButtonGroup
-                      orientation="vertical"
-                      aria-label="vertical contained button group"
-                      variant="contained"
-                    >
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="success"
-                        onClick={() => downloadImage(img.urls[0], img.id)}
-                      >
-                        <DownloadIcon></DownloadIcon>
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="success"
-                        name={img.id}
-                        value={description}
-                        onClick={() => onEditDescriptionHandler(img.id)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="error"
-                        name={img.id}
-                        onClick={onDeletePhotoHandler}
-                      >
-                        Delete
-                      </Button>
-                    </ButtonGroup>
+                    <Grid container sx={{ margin: "auto" }}>
+                      <Grid xs={9}>
+                        <Stack spacing={1}>
+                          <TextField
+                            fullWidth
+                            label="Change Description"
+                            size="small"
+                            variant="standard"
+                            onChange={onChangeHandler}
+                          />
+                          <Button
+                            size="small"
+                            value={description}
+                            variant="contained"
+                            onClick={() => onEditDescriptionHandler(img.id)}
+                          >
+                            Edit
+                          </Button>
+                        </Stack>
+                      </Grid>
+                      <Grid xs>
+                        <ButtonGroup
+                          orientation="vertical"
+                          aria-label="vertical contained button group"
+                          variant="contained"
+                        >
+                          <Button>
+                            <SimpleDialogDemo
+                              likes={img.likes}
+                              width={img.width}
+                              height={img.height}
+                              date={img.date}
+                              downloadUrl={img.urls[0]}
+                              id={img.id}
+                            ></SimpleDialogDemo>
+                          </Button>
+                          <Button>
+                            <DeleteTwoToneIcon
+                              onClick={() => onDeletePhotoHandler(img.id)}
+                            ></DeleteTwoToneIcon>
+                          </Button>
+                        </ButtonGroup>
+                      </Grid>
+                    </Grid>
                   </CardActions>
                 </Card>
               </Grid>
