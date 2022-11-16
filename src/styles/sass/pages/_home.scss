@@ -1,18 +1,17 @@
 main.main__home {
-  height:70vh;
+  height: 70vh;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  div
-  {
+  div {
     display: flex;
     flex-direction: column;
   }
-    h1 {
-      margin-bottom: 40px;
-      font-size: 3rem;
-      color: white;
-      display: inline-block;
-    }
+  h1 {
+    margin-bottom: 40px;
+    font-size: 3rem;
+    color: white;
+    display: inline-block;
+  }
 }
