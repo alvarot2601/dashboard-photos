@@ -21,7 +21,8 @@ nav ul li {
 main.main__search {
   width: 80%;
   margin: auto;
-  margin-top: 50px;
+  padding-top: 50px;
+  min-height: 70vh;
 }
 
 div.images-container {
@@ -29,7 +30,7 @@ div.images-container {
 }
 
 footer {
-  height: 70px;
+  height: 15vh;
   font-size: 1.5rem;
   font-weight: bolder;
   margin-top: auto;
@@ -73,7 +74,8 @@ div.savedImages-container {
   margin: auto;
   text-align: center;
   padding-bottom: 50px;
-  margin-top: 50px;
+  padding-top: 50px;
+  min-height: 70vh;
 }
 
 div.MuiSelect-select {
@@ -89,12 +91,17 @@ body {
 }
 body input {
   outline: 1px solid #1976d2;
+  color: white;
+}
+body input.MuiInputBase-input {
+  color: white;
+  outline: 1px solid white;
 }
 body select {
   outline: 1px solid black;
 }
 body label.MuiFormLabel-root {
-  color: #1976d2;
+  color: white;
 }
 
 a {
