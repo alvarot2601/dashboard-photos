@@ -52,6 +52,10 @@ main.main__home {
   align-items: center;
   justify-content: center;
 }
+main.main__home div {
+  display: flex;
+  flex-direction: column;
+}
 main.main__home h1 {
   margin-bottom: 40px;
   font-size: 3rem;

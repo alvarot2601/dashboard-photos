@@ -4,6 +4,11 @@ main.main__home {
   display: flex;
   align-items: center;
   justify-content: center;
+  div
+  {
+    display: flex;
+    flex-direction: column;
+  }
     h1 {
       margin-bottom: 40px;
       font-size: 3rem;
