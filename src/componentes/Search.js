@@ -22,20 +22,16 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
 const Search = (props) => {
-  //const [searchTerm, setSearchTerm] = useState('');--
-  //const selectSearchTerm = useSelector(state => state.searchTerm);
   const searchTerm = useSelector(selectSearchTerm);
   const favoritePhotos = useSelector(selectFavoritePhotos);
   const photos = useSelector(selectPhotos);
-  console.log("photos: " + photos[0]);
   const dispatch = useDispatch();
 
-  //const searchTerm = useSelector(selectSearchTerm);
 
   const handleChange = (e) => {
     dispatch(addSearchTerm(e.target.value));
-    //setSearchTerm(e.target.value);--
   };
+
   const handleClick = async () => {
     const response = await fetch(
       "https://api.unsplash.com/search/photos/?query=" +
@@ -43,12 +39,9 @@ const Search = (props) => {
         "&client_id=68CyGDmE1a7FiglE6ufSenlEKv-mqBbqy5lvRv4owGU"
     );
     const data = await response.json();
-    //props.setImages(data.results);
     dispatch(addPhotos(data.results));
     dispatch(clearSearchTerm());
-    console.log("data.results" + data.results[0].urls.regular);
   };
-  console.log(photos);
   const saveImage = (e, id) => {
     const actualDateTime = new Date();
     const [img] = photos.filter((img) => img.id === id);
@@ -73,7 +66,6 @@ const Search = (props) => {
     if (sw === false) {
       dispatch(addFavoritePhoto(properties));
     }
-    console.log("src: " + properties.src);
   };
 
   return (
@@ -102,7 +94,6 @@ const Search = (props) => {
             </Button>
           </Grid>
         </Grid>
-
         <div className="images-container">
           <Grid container spacing={2} columns={{ xs: 1, sm: 1, md: 8, lg: 12 }}>
             {photos.map((img, index) => {
@@ -130,9 +121,4 @@ const Search = (props) => {
   );
 };
 export default Search;
-/*<div key={img.id}>
-                <Button variant="contained" onClick={saveImage} name={img.id}>
-                  Add to my photos
-                </Button>
-                <img src={img.urls.full} />
-              </div> */
+
