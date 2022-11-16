@@ -17,16 +17,15 @@ import Grid from "@mui/material/Unstable_Grid2";
 import SearchIcon from "@mui/icons-material/Search";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 
-const Search = (props) => {
+const Search = () => {
   const searchTerm = useSelector(selectSearchTerm);
   const favoritePhotos = useSelector(selectFavoritePhotos);
   const photos = useSelector(selectPhotos);
   const dispatch = useDispatch();
 
+  //manejadores de eventos
 
   const handleChange = (e) => {
     dispatch(addSearchTerm(e.target.value));
@@ -88,7 +87,7 @@ const Search = (props) => {
               variant="outlined"
               size="large"
               onClick={handleClick}
-              sx={{ color: "white", outline:'1px solid white' }}
+              sx={{ color: "white", outline: "1px solid white" }}
             >
               <SearchIcon onClick={handleClick}></SearchIcon>
             </Button>
@@ -121,4 +120,3 @@ const Search = (props) => {
   );
 };
 export default Search;
-
