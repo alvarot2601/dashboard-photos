@@ -25,13 +25,12 @@ const Search = () => {
   const photos = useSelector(selectPhotos);
   const dispatch = useDispatch();
 
-  //manejadores de eventos
-
-  const onHandleChange = (e) => {
+  ////EVENT HANDLERS
+  const onChangeHandler = (e) => {
     dispatch(addSearchTerm(e.target.value));
   };
 
-  const onHandleClick = async (e) => {
+  const onClickHandler = async (e) => {
 
     if(e.keyCode!==13 && e.type !== 'click')
     {
@@ -46,7 +45,7 @@ const Search = () => {
     dispatch(addPhotos(data.results));
     dispatch(clearSearchTerm());
   };
-  const onSaveImage = (e, id) => {
+  const onSaveImageHandler = (e, id) => {
     const actualDateTime = new Date();
     const [img] = photos.filter((img) => img.id === id);
     let sw = false;
@@ -85,8 +84,8 @@ const Search = () => {
               size="small"
               fullWidth
               label="Search photos from Unsplash"
-              onChange={onHandleChange}
-              onKeyUp={(e) => onHandleClick(e)}
+              onChange={onChangeHandler}
+              onKeyUp={(e) => onClickHandler(e)}
               value={searchTerm}
             />
           </Grid>
@@ -94,10 +93,10 @@ const Search = () => {
             <Button
               variant="outlined"
               size="large"
-              onClick={(e) => onHandleClick(e)}
+              onClick={(e) => onClickHandler(e)}
               sx={{ color: "white", outline: "1px solid white" }}
             >
-              <SearchIcon onClick={onHandleClick}></SearchIcon>
+              <SearchIcon onClick={onClickHandler}></SearchIcon>
             </Button>
           </Grid>
         </Grid>
@@ -111,7 +110,7 @@ const Search = () => {
                     <CardActions>
                       <Button
                         variant="contained"
-                        onClick={(e) => onSaveImage(e, img.id)}
+                        onClick={(e) => onSaveImageHandler(e, img.id)}
                         fullWidth
                       >
                         Add to my photos
