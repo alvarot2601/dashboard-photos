@@ -100,6 +100,9 @@ div.savedImages-container .visible {
 div.savedImages-container .invisible {
   display: none;
 }
+div.savedImages-container label.MuiFormLabel-root {
+  color: #1976d2;
+}
 
 div.MuiSelect-select {
   color: #1976d2;

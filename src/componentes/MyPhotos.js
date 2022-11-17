@@ -33,7 +33,7 @@ import {
   selectCategory,
 } from "../features/orderByCategory/orderByCategorySlice";
 
-const MyPhotos = (props) => {
+const MyPhotos = () => {
   //para que resetee el search term cada vez que renderiza
   useEffect(() => {
     dispatch(clearSearchTerm());
@@ -52,9 +52,9 @@ const MyPhotos = (props) => {
       botonesArr.push(false);
     }
     setVisibleButtons(botonesArr);
-  }, [favoritePhotos]);
+  }, [favoritePhotos])
 
-  //event Handler
+  /////////////EVENT HANDLERS
   const onDeletePhotoHandler = (id) => {
     for (let i = 0; i < localStorage.length; i++) {
       //si la key de los elementos de localstorage contiene 'saved_images_' entonces pushea la imagen al array
@@ -64,7 +64,7 @@ const MyPhotos = (props) => {
       }
     }
     dispatch(removeFavoritePhoto(id));
-  };
+  }
 
   const onEditDescriptionHandler = (id) => {
     const key = "saved_images_" + id;
@@ -78,7 +78,7 @@ const MyPhotos = (props) => {
         );
       }
     }
-  };
+  }
   const onChangeHandler = (e, index) => {
     let newArr = visibleButtons.map((item, i) => {
       if(index == i && e.target.value !== '') item = true;
@@ -87,14 +87,15 @@ const MyPhotos = (props) => {
     })
     setVisibleButtons(newArr);
     setDescription(e.target.value);
-  };
+  }
   const onSearchByDescription = (e) => {
     dispatch(addSearchTerm(e.target.value));
-  };
+  }
 
   const onSortByCategory = (event: SelectChangeEvent) => {
     dispatch(changeCategory(event.target.value));
-  };
+  }
+
   return (
     <div className="savedImages-container">
       <TextField
@@ -153,7 +154,7 @@ const MyPhotos = (props) => {
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
                       {
-                        (img.description===null || img.description==='') ? <strong>This img has no description</strong> : img.description
+                        (img.description===null || img.description==='') ? <strong>*This img has no description*</strong> : img.description
                       }
                     </Typography>
                   </CardContent>
