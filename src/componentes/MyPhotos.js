@@ -6,7 +6,6 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import Container from "@mui/material/Container";
 import Grid2 from "@mui/material/Unstable_Grid2"; // Grid version 2
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -19,13 +18,9 @@ import Stack from "@mui/material/Stack";
 import SimpleDialogDemo from "./SimpleDialog";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import {
-  selectFavoritePhotos,
-  addFavoritePhoto,
   removeFavoritePhoto,
   editFavoritePhotoDescription,
-  selectPhotoDescription,
-  searchFavoritePhoto,
-  selectFilteredPhotos,
+  selectFilteredPhotos
 } from "../features/favoritePhotos/favoritePhotosSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -47,7 +42,7 @@ const MyPhotos = (props) => {
   const favoritePhotos = useSelector(selectFilteredPhotos);
   const searchTerm = useSelector(selectSearchTerm);
   const sortCategory = useSelector(selectCategory);
-
+  //const [visibleButtons, useVisibleButtons] = useState
   const [description, setDescription] = useState("");
 
   //event Handler
@@ -92,7 +87,7 @@ const MyPhotos = (props) => {
   const onSortByCategory = (event: SelectChangeEvent) => {
     dispatch(changeCategory(event.target.value));
   };
-
+  favoritePhotos.map(img => (img.description !== null && img.description.toLowerCase().search(searchTerm.toLowerCase()) !== -1)  && console.log(img.description.toLowerCase()))
   return (
     <div className="savedImages-container">
       <TextField
@@ -125,18 +120,9 @@ const MyPhotos = (props) => {
           <MenuItem value="height">Height</MenuItem>
           <MenuItem value="likes">Likes</MenuItem>
         </Select>
-      </FormControl>
-
+      </FormControl>  
       <Grid container spacing={2} columns={{ xs: 1, sm: 1, md: 8, lg: 12 }}>
         {favoritePhotos
-          .filter(
-            (img) =>
-              (img.description === null && searchTerm === "") ||
-              (img.description !== null &&
-                img.description
-                  .toLowerCase()
-                  .search(searchTerm.toLowerCase()) !== -1)
-          )
           .sort((a, b) => {
             if (sortCategory === "date") {
               return new Date(a[sortCategory]) - new Date(b[sortCategory]);
@@ -176,6 +162,7 @@ const MyPhotos = (props) => {
                           <Button
                             sx={{display:'none'}}
                             id={`edit_description_btn_${img.id}`}
+                            key={`edit_description_btn_${img.id}`}
                             size="small"
                             value={description}
                             variant="contained"
