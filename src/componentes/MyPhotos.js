@@ -75,7 +75,14 @@ const MyPhotos = (props) => {
       }
     }
   };
-  const onChangeHandler = (e) => {
+  const onChangeHandler = (e, id) => {
+    if(e.target.value !== '')
+    {
+      document.getElementById(`edit_description_btn_${id}`).style.display = "block";
+    }
+    else{
+      document.getElementById(`edit_description_btn_${id}`).style.display = "none";
+    }
     setDescription(e.target.value);
   };
   const onSearchByDescription = (e) => {
@@ -164,15 +171,17 @@ const MyPhotos = (props) => {
                             label="Change Description"
                             size="small"
                             variant="standard"
-                            onChange={onChangeHandler}
+                            onChange={(e) => onChangeHandler(e, img.id)}
                           />
                           <Button
+                            sx={{display:'none'}}
+                            id={`edit_description_btn_${img.id}`}
                             size="small"
                             value={description}
                             variant="contained"
                             onClick={() => onEditDescriptionHandler(img.id)}
                           >
-                            Edit
+                            Save
                           </Button>
                         </Stack>
                       </Grid>
