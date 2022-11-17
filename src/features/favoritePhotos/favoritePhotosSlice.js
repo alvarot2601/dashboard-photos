@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import React from "react";
 import { selectSearchTerm } from "../searchTerm/searchTermSlice";
 
 let savedImagesArr = [];
@@ -22,21 +21,16 @@ export const favoritePhotosSlice = createSlice({
     },
     editFavoritePhotoDescription: (state, action) =>
       state.map((img) => {
-        console.log("action.payload:" + action.payload.description);
         if (img.id === action.payload.id)
           return { ...img, description: action.payload.description };
         return img;
       }),
   },
 });
-console.log(favoritePhotosSlice);
 export const selectFavoritePhotos = (state) => state.favoritePhotos;
 export const selectFilteredPhotos = (state) => {
   const allPhotos = selectFavoritePhotos(state);
   const searchTerm = selectSearchTerm(state);
-  console.log("all pthostos: " + allPhotos);
-  console.log("search term: " + searchTerm);
-  //return
   return allPhotos.filter((img) => {
     if (img.description !== null) {
       return img.description.toLowerCase().search(searchTerm) !== -1;
@@ -44,6 +38,7 @@ export const selectFilteredPhotos = (state) => {
     {
       return img;
     }
+    return null;
   });
 };
 export const {
