@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "../assets/nav.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import MonochromePhotosSharpIcon from "@mui/icons-material/MonochromePhotosSharp";
@@ -22,7 +22,7 @@ const Nav = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">
+            <NavLink exact activeClassName="active" to="/">
               <HomeIcon
                 sx={{
                   [theme.breakpoints.up("laptop")]: {
@@ -31,10 +31,10 @@ const Nav = () => {
                   fontSize: 36,
                 }}
               ></HomeIcon>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/search">
+            <NavLink exact activeClassName="active" to="/search">
               <ImageSearchSharpIcon
                 sx={{
                   [theme.breakpoints.up("laptop")]: {
@@ -43,10 +43,10 @@ const Nav = () => {
                   fontSize: 36,
                 }}
               ></ImageSearchSharpIcon>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/myphotos">
+            <NavLink exact activeClassName="active" to="/myphotos">
               <MonochromePhotosSharpIcon
                 sx={{
                   [theme.breakpoints.up("laptop")]: {
@@ -55,7 +55,7 @@ const Nav = () => {
                   fontSize: 36,
                 }}
               ></MonochromePhotosSharpIcon>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

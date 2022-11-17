@@ -5,6 +5,13 @@ div.savedImages-container {
   padding-bottom: 50px;
   padding-top: 50px;
   min-height: 70vh;
+  input.MuiInputBase-input {
+    color: #1976d2;
+  }
+  img
+  {
+    height:300px;
+  }
 }
 div.MuiSelect-select {
   color: #1976d2;

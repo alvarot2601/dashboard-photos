@@ -2,10 +2,10 @@ nav
 {
 	position: sticky;
   	top: 0;
-	z-index: 1;
-	margin-top:20px;
+	z-index: 999;
 	color:white;
 	height:15vh;
+	background-color: rgba(0,0,0,0.8);
 	ul
 	{
 		height:100%;
@@ -19,4 +19,7 @@ nav
 			font-weight: bold;
 		}
 	}
+}
+.active{
+	color: #1976d2;
 }
