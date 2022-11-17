@@ -117,24 +117,14 @@ const Search = () => {
                   <Card sx={{ maxWidth: 345, margin: "auto" }}>
                     <CardMedia component="img" src={img.urls.regular} />
                     <CardActions>
-                      {repeatPhoto[index] === false ? (
-                        <Button
-                          variant="contained"
-                          onClick={(e) => onSaveImageHandler(e, img.id)}
-                          fullWidth
-                        >
-                          Add to my photos
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="contained"
-                          onClick={(e) => onSaveImageHandler(e, img.id)}
-                          disabled="true"
-                          fullWidth
-                        >
-                          Added to my photos
-                        </Button>
-                      )}
+                      <Button
+                        variant="contained"
+                        onClick={(e) => onSaveImageHandler(e, img.id)}
+                        fullWidth
+                        disabled = {repeatPhoto[index] ? true : false}
+                      >
+                        {repeatPhoto[index] ? 'Added' : 'Add to my photos' }
+                      </Button>
                     </CardActions>
                   </Card>
                 </Grid>
