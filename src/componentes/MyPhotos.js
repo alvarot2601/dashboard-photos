@@ -20,7 +20,7 @@ import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import {
   removeFavoritePhoto,
   editFavoritePhotoDescription,
-  selectFilteredPhotos
+  selectFilteredPhotos,
 } from "../features/favoritePhotos/favoritePhotosSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -34,6 +34,7 @@ import {
 } from "../features/orderByCategory/orderByCategorySlice";
 
 const MyPhotos = (props) => {
+  //para que resetee el search term cada vez que renderiza
   useEffect(() => {
     dispatch(clearSearchTerm());
   }, []);
@@ -42,8 +43,16 @@ const MyPhotos = (props) => {
   const favoritePhotos = useSelector(selectFilteredPhotos);
   const searchTerm = useSelector(selectSearchTerm);
   const sortCategory = useSelector(selectCategory);
-  //const [visibleButtons, useVisibleButtons] = useState
   const [description, setDescription] = useState("");
+  const [visibleButtons, setVisibleButtons] = useState([]);
+  //para que muestre o deje de mostrar los botones que editan las descripciones de las fotos
+  useEffect(() => {
+    let botonesArr = [];
+    for (let i = 0; i < favoritePhotos.length; i++) {
+      botonesArr.push(false);
+    }
+    setVisibleButtons(botonesArr);
+  }, [favoritePhotos]);
 
   //event Handler
   const onDeletePhotoHandler = (id) => {
@@ -70,14 +79,13 @@ const MyPhotos = (props) => {
       }
     }
   };
-  const onChangeHandler = (e, id) => {
-    if(e.target.value !== '')
-    {
-      document.getElementById(`edit_description_btn_${id}`).style.display = "block";
-    }
-    else{
-      document.getElementById(`edit_description_btn_${id}`).style.display = "none";
-    }
+  const onChangeHandler = (e, index) => {
+    let newArr = visibleButtons.map((item, i) => {
+      if(index == i && e.target.value !== '') item = true;
+      else if(index == i && e.target.value === '') item=false;
+      return item;
+    })
+    setVisibleButtons(newArr);
     setDescription(e.target.value);
   };
   const onSearchByDescription = (e) => {
@@ -104,14 +112,14 @@ const MyPhotos = (props) => {
           onChange={onSortByCategory}
           sx={{
             ".MuiOutlinedInput-notchedOutline": {
-              borderColor: "white"
+              borderColor: "white",
             },
             ".MuiSvgIcon-root ": {
-              fill: "white !important"
+              fill: "white !important",
             },
             ".MuiSelect-select": {
-              color: 'white'
-            }
+              color: "white",
+            },
           }}
         >
           <MenuItem value="date">Date</MenuItem>
@@ -119,7 +127,7 @@ const MyPhotos = (props) => {
           <MenuItem value="height">Height</MenuItem>
           <MenuItem value="likes">Likes</MenuItem>
         </Select>
-      </FormControl>  
+      </FormControl>
       <Grid container spacing={2} columns={{ xs: 1, sm: 1, md: 8, lg: 12 }}>
         {favoritePhotos
           .sort((a, b) => {
@@ -128,7 +136,7 @@ const MyPhotos = (props) => {
             }
             return a[sortCategory] - b[sortCategory];
           })
-          .map((img) => {
+          .map((img, index) => {
             return (
               <Grid xs={4} key={img.id}>
                 <Card sx={{ maxWidth: 345, margin: "auto" }}>
@@ -144,7 +152,9 @@ const MyPhotos = (props) => {
                   />
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                      {img.description}
+                      {
+                        (img.description===null || img.description==='') ? <strong>This img has no description</strong> : img.description
+                      }
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -156,12 +166,12 @@ const MyPhotos = (props) => {
                             label="Change Description"
                             size="small"
                             variant="standard"
-                            onChange={(e) => onChangeHandler(e, img.id)}
+                            onChange={(e) => onChangeHandler(e, index)}
                           />
                           <Button
-                            sx={{display:'none'}}
-                            id={`edit_description_btn_${img.id}`}
-                            key={`edit_description_btn_${img.id}`}
+                            className={
+                              visibleButtons[index] ? "visible" : "invisible"
+                            }
                             size="small"
                             value={description}
                             variant="contained"
