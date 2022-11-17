@@ -37,7 +37,7 @@ const Search = () => {
       else repeatPhotosArr.push(false);
       setRepeatPhoto(repeatPhotosArr);
     });
-  }, [photos]);
+  }, [photos, favoritePhotos]);
 
   ////EVENT HANDLERS
   const onChangeHandler = (e) => {
@@ -81,7 +81,6 @@ const Search = () => {
     if (sw === false) {
       dispatch(addFavoritePhoto(properties));
     }
-    e.target.style.backgroundColor = "#1C6758";
   };
   return (
     <>
@@ -130,7 +129,7 @@ const Search = () => {
                         <Button
                           variant="contained"
                           onClick={(e) => onSaveImageHandler(e, img.id)}
-                          sx={{ backgroundColor: "#1C6758" }}
+                          disabled="true"
                           fullWidth
                         >
                           Added to my photos
