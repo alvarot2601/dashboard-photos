@@ -12,6 +12,12 @@ div.savedImages-container {
   {
     height:300px;
   }
+  .visible{
+    display:block;
+  }
+  .invisible{
+    display: none;
+  }
 }
 div.MuiSelect-select {
   color: #1976d2;

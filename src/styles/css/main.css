@@ -94,6 +94,12 @@ div.savedImages-container input.MuiInputBase-input {
 div.savedImages-container img {
   height: 300px;
 }
+div.savedImages-container .visible {
+  display: block;
+}
+div.savedImages-container .invisible {
+  display: none;
+}
 
 div.MuiSelect-select {
   color: #1976d2;
@@ -128,6 +134,14 @@ a {
 
 a:hover {
   color: #1976d2;
+}
+
+.visible {
+  display: block;
+}
+
+.invisible {
+  display: none;
 }
 
 /*# sourceMappingURL=main.css.map */
