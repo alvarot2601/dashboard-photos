@@ -190,6 +190,7 @@ const MyPhotos = (props) => {
                               date={img.date}
                               downloadUrl={img.urls[0]}
                               id={img.id}
+                              description={img.description}
                             ></SimpleDialogDemo>
                           </Button>
                           <Button>
