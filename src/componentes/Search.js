@@ -38,8 +38,7 @@ const Search = () => {
       setRepeatPhoto(repeatPhotosArr);
     });
   }, [photos]);
-  console.log(repeatPhoto);
-
+  
   ////EVENT HANDLERS
   const onChangeHandler = (e) => {
     dispatch(addSearchTerm(e.target.value));
@@ -131,7 +130,7 @@ const Search = () => {
                         <Button
                           variant="contained"
                           onClick={(e) => onSaveImageHandler(e, img.id)}
-                          sx={{backgroundColor:'#1C6758'}}
+                          sx={{ backgroundColor: "#1C6758" }}
                           fullWidth
                         >
                           Added to my photos
