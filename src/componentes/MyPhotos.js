@@ -87,7 +87,6 @@ const MyPhotos = (props) => {
   const onSortByCategory = (event: SelectChangeEvent) => {
     dispatch(changeCategory(event.target.value));
   };
-  favoritePhotos.map(img => (img.description !== null && img.description.toLowerCase().search(searchTerm.toLowerCase()) !== -1)  && console.log(img.description.toLowerCase()))
   return (
     <div className="savedImages-container">
       <TextField
