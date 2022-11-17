@@ -31,14 +31,14 @@ const Search = () => {
     photos.forEach((photo) => {
       sw = false;
       for (let i = 0; i < favoritePhotos.length; i++) {
-        if (photo.id === favoritePhotos[i].id) sw = true; //repeatPhotosArr.push(false);break;
+        if (photo.id === favoritePhotos[i].id) sw = true;
       }
       if (sw === true) repeatPhotosArr.push(true);
       else repeatPhotosArr.push(false);
       setRepeatPhoto(repeatPhotosArr);
     });
   }, [photos]);
-  
+
   ////EVENT HANDLERS
   const onChangeHandler = (e) => {
     dispatch(addSearchTerm(e.target.value));
