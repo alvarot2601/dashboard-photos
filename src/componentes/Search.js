@@ -123,7 +123,7 @@ const Search = () => {
                         fullWidth
                         disabled = {repeatPhoto[index] ? true : false}
                       >
-                        {repeatPhoto[index] ? 'Added to my photos' : 'Add to my photos' }
+                        {repeatPhoto[index] ? 'Added' : 'Add to my photos' }
                       </Button>
                     </CardActions>
                   </Card>
