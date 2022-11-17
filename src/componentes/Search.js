@@ -31,14 +31,13 @@ const Search = () => {
     photos.forEach((photo) => {
       sw = false;
       for (let i = 0; i < favoritePhotos.length; i++) {
-        if (photo.id === favoritePhotos[i].id) sw = true; //repeatPhotosArr.push(false);break;
+        if (photo.id === favoritePhotos[i].id) sw = true;
       }
       if (sw === true) repeatPhotosArr.push(true);
       else repeatPhotosArr.push(false);
       setRepeatPhoto(repeatPhotosArr);
     });
   }, [photos]);
-  console.log(repeatPhoto);
 
   ////EVENT HANDLERS
   const onChangeHandler = (e) => {
@@ -131,7 +130,7 @@ const Search = () => {
                         <Button
                           variant="contained"
                           onClick={(e) => onSaveImageHandler(e, img.id)}
-                          sx={{backgroundColor:'#1C6758'}}
+                          sx={{ backgroundColor: "#1C6758" }}
                           fullWidth
                         >
                           Added to my photos
