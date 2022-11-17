@@ -31,7 +31,12 @@ const Search = () => {
     dispatch(addSearchTerm(e.target.value));
   };
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    
+    if(e.keyCode!==13 && e.type !== 'click')
+    {
+      return;
+    }
     const response = await fetch(
       "https://api.unsplash.com/search/photos/?query=" +
         searchTerm +
@@ -65,7 +70,9 @@ const Search = () => {
     if (sw === false) {
       dispatch(addFavoritePhoto(properties));
     }
-  };
+    e.target.innerHTML="ADDED TO MY PHOTOS";
+    e.target.style.backgroundColor="green";
+  }
 
   return (
     <>
@@ -79,6 +86,7 @@ const Search = () => {
               fullWidth
               label="Search photos from Unsplash"
               onChange={handleChange}
+              onKeyUp={(e) => handleClick(e)}
               value={searchTerm}
             />
           </Grid>
@@ -86,7 +94,7 @@ const Search = () => {
             <Button
               variant="outlined"
               size="large"
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
               sx={{ color: "white", outline: "1px solid white" }}
             >
               <SearchIcon onClick={handleClick}></SearchIcon>
