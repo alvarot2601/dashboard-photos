@@ -3,7 +3,7 @@ export const searchTermSlice = createSlice({
   initialState: "",
   name: "searchTerm",
   reducers: {
-    addSearchTerm: (state, action) => action.payload,
+    addSearchTerm: (state, action) => action.payload.toLowerCase(),
     clearSearchTerm: (state) => "",
   },
 });

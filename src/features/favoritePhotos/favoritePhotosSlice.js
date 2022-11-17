@@ -35,10 +35,11 @@ export const selectFilteredPhotos = (state) => {
   const allPhotos = selectFavoritePhotos(state);
   const searchTerm = selectSearchTerm(state);
   console.log("all pthostos: " + allPhotos);
+  console.log("search term: " + searchTerm);
   //return
   return allPhotos.filter((img) => {
     if (img.description !== null) {
-      return img.description.search(searchTerm) !== -1;
+      return img.description.toLowerCase().search(searchTerm) !== -1;
     }else if(img.description === null && searchTerm === '')
     {
       return img;
