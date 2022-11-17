@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -24,6 +24,21 @@ const Search = () => {
   const favoritePhotos = useSelector(selectFavoritePhotos);
   const photos = useSelector(selectPhotos);
   const dispatch = useDispatch();
+  const [repeatPhoto, setRepeatPhoto] = useState([]);
+  useEffect(() => {
+    let repeatPhotosArr = [];
+    let sw = false;
+    photos.forEach((photo) => {
+      sw = false;
+      for (let i = 0; i < favoritePhotos.length; i++) {
+        if (photo.id === favoritePhotos[i].id) sw = true; //repeatPhotosArr.push(false);break;
+      }
+      if (sw === true) repeatPhotosArr.push(true);
+      else repeatPhotosArr.push(false);
+      setRepeatPhoto(repeatPhotosArr);
+    });
+  }, [photos]);
+  console.log(repeatPhoto);
 
   ////EVENT HANDLERS
   const onChangeHandler = (e) => {
@@ -31,9 +46,7 @@ const Search = () => {
   };
 
   const onClickHandler = async (e) => {
-
-    if(e.keyCode!==13 && e.type !== 'click')
-    {
+    if (e.keyCode !== 13 && e.type !== "click") {
       return;
     }
     const response = await fetch(
@@ -69,10 +82,8 @@ const Search = () => {
     if (sw === false) {
       dispatch(addFavoritePhoto(properties));
     }
-    e.target.innerHTML="ADDED TO MY PHOTOS";
-    e.target.style.backgroundColor="green";
-  }
-
+    e.target.style.backgroundColor = "#1C6758";
+  };
   return (
     <>
       <main className="main__search">
@@ -108,13 +119,24 @@ const Search = () => {
                   <Card sx={{ maxWidth: 345, margin: "auto" }}>
                     <CardMedia component="img" src={img.urls.regular} />
                     <CardActions>
-                      <Button
-                        variant="contained"
-                        onClick={(e) => onSaveImageHandler(e, img.id)}
-                        fullWidth
-                      >
-                        Add to my photos
-                      </Button>
+                      {repeatPhoto[index] === false ? (
+                        <Button
+                          variant="contained"
+                          onClick={(e) => onSaveImageHandler(e, img.id)}
+                          fullWidth
+                        >
+                          Add to my photos
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          onClick={(e) => onSaveImageHandler(e, img.id)}
+                          sx={{backgroundColor:'#1C6758'}}
+                          fullWidth
+                        >
+                          Added to my photos
+                        </Button>
+                      )}
                     </CardActions>
                   </Card>
                 </Grid>
