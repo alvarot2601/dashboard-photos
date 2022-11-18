@@ -38,7 +38,7 @@ export const selectFilteredPhotos = (state) => {
     {
       return img;
     }
-    return null;
+    return false;
   });
 };
 export const {

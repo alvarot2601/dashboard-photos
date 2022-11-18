@@ -7,7 +7,6 @@ export const searchTermSlice = createSlice({
     clearSearchTerm: (state) => "",
   },
 });
-console.log(searchTermSlice);
 export const selectSearchTerm = (state) => state.searchTerm;
 
 export const { addSearchTerm, clearSearchTerm } = searchTermSlice.actions;
