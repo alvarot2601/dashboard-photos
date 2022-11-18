@@ -1,7 +1,5 @@
 import React from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import logo from "../assets/nav.svg";
-import SearchIcon from "@mui/icons-material/Search";
+import {NavLink, Outlet } from "react-router-dom";
 import MonochromePhotosSharpIcon from "@mui/icons-material/MonochromePhotosSharp";
 import HomeIcon from "@mui/icons-material/Home";
 import ImageSearchSharpIcon from "@mui/icons-material/ImageSearchSharp";
