@@ -1,25 +1,22 @@
-nav
-{
-	position: sticky;
-  	top: 0;
-	z-index: 999;
-	color:white;
-	height:15vh;
-	background-color: rgba(0,0,0,0.8);
-	ul
-	{
-		height:100%;
-		list-style-type: none;
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		li
-		{
-			margin: 0px 20px;
-			font-weight: bold;
-		}
-	}
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  color: white;
+  height: 15vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  ul {
+    height: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    li {
+      margin: 0px 20px;
+      font-weight: bold;
+    }
+  }
 }
-.active{
-	color: #1976d2;
+.active {
+  color: #1976d2;
 }
