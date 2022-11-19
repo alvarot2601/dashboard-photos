@@ -18,13 +18,16 @@ import SearchIcon from "@mui/icons-material/Search";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
+import { PhotosPagination } from "./PhotosPagination";
 
 const Search = () => {
+  const [page, setPage] = useState(1);
   const searchTerm = useSelector(selectSearchTerm);
   const favoritePhotos = useSelector(selectFavoritePhotos);
   const photos = useSelector(selectPhotos);
   const dispatch = useDispatch();
   const [repeatPhoto, setRepeatPhoto] = useState([]);
+
   useEffect(() => {
     let repeatPhotosArr = [];
     let sw = false;
@@ -39,23 +42,32 @@ const Search = () => {
     });
   }, [photos, favoritePhotos]);
 
+
+  useEffect(() => {
+    onClickHandler();
+  }, [page]);
+
+  ///////funcion que envía solicitud a unsplash
+  const getPhotos = async () => {
+    const response = await fetch(
+      `https://api.unsplash.com/search/photos/?query=${searchTerm}&page=${page}&per_page=9&client_id=68CyGDmE1a7FiglE6ufSenlEKv-mqBbqy5lvRv4owGU`
+    );
+    const data = await response.json();
+    dispatch(addPhotos(data.results));
+  }
+
   ////EVENT HANDLERS
   const onChangeHandler = (e) => {
     dispatch(addSearchTerm(e.target.value));
   };
+  
 
   const onClickHandler = async (e) => {
-    if (e.keyCode !== 13 && e.type !== "click") {
-      return;
+    if (e && e.keyCode !== 13 && e.type !== "click") {
+      return false;
     }
-    const response = await fetch(
-      "https://api.unsplash.com/search/photos/?query=" +
-        searchTerm +
-        "&client_id=68CyGDmE1a7FiglE6ufSenlEKv-mqBbqy5lvRv4owGU"
-    );
-    const data = await response.json();
-    dispatch(addPhotos(data.results));
-    dispatch(clearSearchTerm());
+    getPhotos();
+   //dispatch(clearSearchTerm());
   };
   const onSaveImageHandler = (e, id) => {
     const actualDateTime = new Date();
@@ -121,9 +133,9 @@ const Search = () => {
                         variant="contained"
                         onClick={(e) => onSaveImageHandler(e, img.id)}
                         fullWidth
-                        disabled = {repeatPhoto[index] ? true : false}
+                        disabled={repeatPhoto[index] ? true : false}
                       >
-                        {repeatPhoto[index] ? 'Added' : 'Add to my photos' }
+                        {repeatPhoto[index] ? "Added" : "Add to my photos"}
                       </Button>
                     </CardActions>
                   </Card>
@@ -133,6 +145,9 @@ const Search = () => {
           </Grid>
         </div>
       </main>
+      {
+        (photos && photos.length>0) ? <PhotosPagination setPage = {setPage} page = {page}></PhotosPagination> : null
+      }
     </>
   );
 };

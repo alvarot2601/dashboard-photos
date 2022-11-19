@@ -52,7 +52,7 @@ const MyPhotos = () => {
       botonesArr.push(false);
     }
     setVisibleButtons(botonesArr);
-  }, [favoritePhotos])
+  }, [favoritePhotos]);
 
   /////////////EVENT HANDLERS
   const onDeletePhotoHandler = (id) => {
@@ -64,7 +64,7 @@ const MyPhotos = () => {
       }
     }
     dispatch(removeFavoritePhoto(id));
-  }
+  };
 
   const onEditDescriptionHandler = (id) => {
     const key = "saved_images_" + id;
@@ -78,24 +78,24 @@ const MyPhotos = () => {
         );
       }
     }
-  }
+  };
   const onChangeHandler = (e, index) => {
     let newArr = visibleButtons.map((item, i) => {
-      if(index == i && e.target.value !== '') item = true;
-      else if(index == i && e.target.value === '') item=false;
+      if (index == i && e.target.value !== "") item = true;
+      else if (index == i && e.target.value === "") item = false;
       return item;
-    })
+    });
     setVisibleButtons(newArr);
     setDescription(e.target.value);
-  }
+  };
   const onSearchByDescription = (e) => {
     dispatch(addSearchTerm(e.target.value));
-  }
+  };
 
   const onSortByCategory = (event: SelectChangeEvent) => {
     dispatch(changeCategory(event.target.value));
-  }
-
+  };
+  
   return (
     <div className="savedImages-container">
       <TextField
@@ -153,9 +153,11 @@ const MyPhotos = () => {
                   />
                   <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                      {
-                        (img.description===null || img.description==='') ? <strong>*This img has no description*</strong> : img.description
-                      }
+                      {img.description === null || img.description === "" ? (
+                        <strong>*This img has no description*</strong>
+                      ) : (
+                        img.description
+                      )}
                     </Typography>
                   </CardContent>
                   <CardActions>
