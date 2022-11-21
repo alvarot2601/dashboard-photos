@@ -10,3 +10,25 @@ nav.MuiPagination-root
         border:1px solid white;
     }
 }
+div.savedImages-container{
+    ul{
+        display: flex;
+        justify-content: center;
+        list-style-type: none;
+    }
+    li{
+        margin:10px;
+    }
+    button.pagination_button{
+        background: transparent;
+        color:white;
+        border:1px solid white;
+        width: 2rem;
+        min-width:2rem;
+        height: 2rem;
+        border-radius: 2rem;
+    }
+    button.selected{
+        background-color: #1565c0;
+    }
+}

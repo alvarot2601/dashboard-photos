@@ -2,23 +2,23 @@ import React from "react";
 import Pagination from "@mui/material/Pagination";
 import {theme} from "../App";
 export const PhotosPagination = (props) => {
-  const { setPage, page } = props;
-
+  const { setPage, page, totalPages } = props;
+  console.log("total pages" , totalPages)
   const onChangeHandler = (e) => {
-    if (parseInt(e.target.textContent) === NaN)
-      console.log(
-        parseInt(e.target.textContent)
-      ); //setPage(parseInt(page) - 1);
-    else setPage(e.target.textContent);
+    console.log("page , ", page)
+    setPage(e.target.textContent);
     window.scroll(0,0);
   };
-
+  
   return (
     <div>
       <Pagination
       sx={{
         width:'80%',
         margin:'auto',
+        ul: {
+          justifyContent:'center'
+        },
         [theme.breakpoints.down("tablet")]: {
             width: '100%',
             flexWrap:'nowrap',
@@ -30,7 +30,7 @@ export const PhotosPagination = (props) => {
             color:'white'
         }
       }}
-        count={10}
+        count={totalPages}
         hidePrevButton
         hideNextButton
         variant="outlined"

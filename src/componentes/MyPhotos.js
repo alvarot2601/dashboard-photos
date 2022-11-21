@@ -32,6 +32,7 @@ import {
   changeCategory,
   selectCategory,
 } from "../features/orderByCategory/orderByCategorySlice";
+import { FavoritePhotosPagination } from "./FavoritePhotosPagination";
 
 const MyPhotos = () => {
   //para que resetee el search term cada vez que renderiza
@@ -45,6 +46,10 @@ const MyPhotos = () => {
   const sortCategory = useSelector(selectCategory);
   const [description, setDescription] = useState("");
   const [visibleButtons, setVisibleButtons] = useState([]);
+  const [page, setPage] = useState(1);
+  const [items, setItems] = useState(favoritePhotos.length);
+  const [itemsLimit, setItemsLimit] = useState(9);
+  const [totalPages, setTotalPages] = useState(1);
   //para que muestre o deje de mostrar los botones que editan las descripciones de las fotos
   useEffect(() => {
     let botonesArr = [];
@@ -52,7 +57,15 @@ const MyPhotos = () => {
       botonesArr.push(false);
     }
     setVisibleButtons(botonesArr);
+    favoritePhotos.length % 9 !== 0
+      ? setTotalPages(parseInt(favoritePhotos.length / 9) + 1)
+      : setTotalPages(parseInt(favoritePhotos.length / 9));
+    //setPage(1);
   }, [favoritePhotos]);
+
+  useEffect(() => {
+    setItemsLimit(page * 9);
+  }, [page, totalPages]);
 
   /////////////EVENT HANDLERS
   const onDeletePhotoHandler = (id) => {
@@ -95,7 +108,11 @@ const MyPhotos = () => {
   const onSortByCategory = (event: SelectChangeEvent) => {
     dispatch(changeCategory(event.target.value));
   };
-  
+
+  const onChangePageHandler = (e) => {
+    ////pruebaa
+    setItemsLimit(parseInt(page * 9));
+  };
   return (
     <div className="savedImages-container">
       <TextField
@@ -136,6 +153,10 @@ const MyPhotos = () => {
               return new Date(a[sortCategory]) - new Date(b[sortCategory]);
             }
             return a[sortCategory] - b[sortCategory];
+          })
+          .filter((photo, index) => {
+            return index >= itemsLimit - 9 && index < itemsLimit;
+            //return index < items && index >= items - 9 ? true : false;
           })
           .map((img, index) => {
             return (
@@ -215,6 +236,11 @@ const MyPhotos = () => {
             );
           })}
       </Grid>
+      <FavoritePhotosPagination
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 };

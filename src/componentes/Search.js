@@ -27,14 +27,18 @@ const Search = () => {
   const photos = useSelector(selectPhotos);
   const dispatch = useDispatch();
   const [repeatPhoto, setRepeatPhoto] = useState([]);
-
+  const APIKEY = '68CyGDmE1a7FiglE6ufSenlEKv-mqBbqy5lvRv4owGU';
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
     let repeatPhotosArr = [];
     let sw = false;
     photos.forEach((photo) => {
       sw = false;
       for (let i = 0; i < favoritePhotos.length; i++) {
-        if (photo.id === favoritePhotos[i].id) sw = true;
+        if (photo.id === favoritePhotos[i].id) {
+          sw = true;
+          break;
+        }
       }
       if (sw === true) repeatPhotosArr.push(true);
       else repeatPhotosArr.push(false);
@@ -42,32 +46,34 @@ const Search = () => {
     });
   }, [photos, favoritePhotos]);
 
-
   useEffect(() => {
-    onClickHandler();
+    getPhotos();
   }, [page]);
-
   ///////funcion que envía solicitud a unsplash
   const getPhotos = async () => {
     const response = await fetch(
-      `https://api.unsplash.com/search/photos/?query=${searchTerm}&page=${page}&per_page=9&client_id=68CyGDmE1a7FiglE6ufSenlEKv-mqBbqy5lvRv4owGU`
+      `https://api.unsplash.com/search/photos/?query=${searchTerm}&page=${page}&per_page=9&client_id=${APIKEY}`
     );
+    
     const data = await response.json();
+    console.log(page)
+    console.log(data.results)
+    console.log(data.total_pages)
+    setTotalPages(data.total_pages);
     dispatch(addPhotos(data.results));
-  }
+  };
 
   ////EVENT HANDLERS
   const onChangeHandler = (e) => {
     dispatch(addSearchTerm(e.target.value));
   };
-  
 
   const onClickHandler = async (e) => {
     if (e && e.keyCode !== 13 && e.type !== "click") {
       return false;
     }
     getPhotos();
-   //dispatch(clearSearchTerm());
+    //dispatch(clearSearchTerm());
   };
   const onSaveImageHandler = (e, id) => {
     const actualDateTime = new Date();
@@ -145,9 +151,9 @@ const Search = () => {
           </Grid>
         </div>
       </main>
-      {
-        (photos && photos.length>0) ? <PhotosPagination setPage = {setPage} page = {page}></PhotosPagination> : null
-      }
+      {photos && photos.length > 0 ? (
+        <PhotosPagination totalPages={totalPages} setPage={setPage} page={page}></PhotosPagination>
+      ) : null}
     </>
   );
 };
